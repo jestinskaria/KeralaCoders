@@ -1,21 +1,12 @@
-
-
 var bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3')
 var http = require('http');
-
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
- 
-
-
-/* Creating Database */
 let db = new sqlite3.Database("./a3", (err) => { 
     if (err) { 
         console.log('Error when creating the database', err) 
     } else { 
        
-        // /* code to create table(s)  */
-
         var sql1 = db.run("CREATE TABLE IF NOT EXISTS students (studentid VARCHAR(20), studentname VARCHAR(20) , programgroup VARCHAR(20))");
        
         var sql2 = db.run("CREATE TABLE IF NOT EXISTS classes (classid VARCHAR(20), classname VARCHAR(255) , room VARCHAR(25),datesession VARCHAR(20))");
@@ -32,7 +23,7 @@ let db = new sqlite3.Database("./a3", (err) => {
        db.serialize(function() {
        studentData.forEach(function(studentData) {
         /* inserting data*/
-        db.run(`INSERT INTO students(studentid,studentname,programgroup) VALUES(?,?,?)`, [studentData.studentId,studentData.studentName,studentData.programGroup], function(err) {
+        db.run(`INSERT INTO students(studentid,studentname,programgroup) VALUES(?,?,?)`,[studentData.studentId,studentData.studentName,studentData.programGroup], function(err) {
           if (err) {
             return console.log(err.message);
           }
@@ -100,14 +91,6 @@ let db = new sqlite3.Database("./a3", (err) => {
        
 }); 
 });       
-
     } 
-
-    
 })
 
-
-
- 
-   
- 
